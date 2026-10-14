@@ -10,7 +10,6 @@ STEP-BY-STEP (Flask app - RECOMMENDED)
 1. Open PowerShell / Terminal.
 
 2. Go to the project folder:
-      cd "C:\Users\Ananth\Desktop\CN_record\CN_proj"
 
 3. (Optional) Create a virtual environment:
       python -m venv venv
