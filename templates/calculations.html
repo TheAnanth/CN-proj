@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculations - Smart Campus</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <header>
+    <h1>Bandwidth Calculations (Module 4)</h1>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/architecture">Architecture</a>
+      <a href="/calculations">Bandwidth Calculations</a>
+      <a href="/simulation">Simulation/Config</a>
+      <a href="/report">Final Report</a>
+    </nav>
+  </header>
+  <main>
+    <section>
+      <h2>Traffic Estimation (Minimum Viable)</h2>
+      <form id="calcForm">
+        <div class="grid">
+          <div>
+            <label>Classrooms</label><input type="number" name="num_classrooms" value="5">
+            <label>Labs</label><input type="number" name="num_labs" value="3">
+            <label>Admin</label><input type="number" name="num_admin" value="2">
+            <label>IoT</label><input type="number" name="num_iot" value="2">
+            <label>Guests</label><input type="number" name="num_guests" value="1">
+          </div>
+          <div>
+            <label>Devices/Class</label><input type="number" name="devices_per_class" value="30">
+            <label>Devices/Lab</label><input type="number" name="devices_per_lab" value="25">
+            <label>Devices/Admin</label><input type="number" name="devices_per_admin" value="10">
+            <label>Devices/IoT</label><input type="number" name="devices_per_iot" value="15">
+            <label>Devices/Guest</label><input type="number" name="devices_per_guest" value="20">
+          </div>
+          <div>
+            <label>Avg BW (Mbps/device)</label><input type="number" step="0.1" name="avg_bw_mbps_per_device" value="1.0">
+            <label>Peak Factor</label><input type="number" step="0.1" name="peak_factor" value="1.5">
+            <label>Core Link (Mbps)</label><input type="number" name="core_link_mbps" value="1000">
+          </div>
+        </div>
+        <button type="submit">Calculate</button>
+      </form>
+    </section>
+    <section>
+      <h2>Results</h2>
+      <pre id="result"></pre>
+    </section>
+    <section>
+      <h2>Notes (as per syllabus)</h2>
+      <p>Estimates link utilization and required bandwidth (Python-based calculation). Suitable for academic submission.</p>
+    </section>
+  </main>
+  <footer><p>Module 4</p></footer>
+  <script>
+    document.getElementById('calcForm').addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      const fd=new FormData(e.target);
+      const data=Object.fromEntries(fd.entries());
+      const res=await fetch('/api/calculate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
+      const json=await res.json();
+      document.getElementById('result').textContent=JSON.stringify(json.result||json.error, null, 2);
+    });
+  </script>
+</body>
+</html>

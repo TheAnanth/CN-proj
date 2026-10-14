@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Architecture - Smart Campus</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <header>
+    <h1>Network Architecture</h1>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/architecture">Architecture</a>
+      <a href="/calculations">Bandwidth Calculations</a>
+      <a href="/simulation">Simulation/Config</a>
+      <a href="/report">Final Report</a>
+    </nav>
+  </header>
+  <main>
+    <section>
+      <h2>Proposed Architecture (Hybrid)</h2>
+      <p>Hierarchical: Core (Router) → Distribution → Access (Switches/APs). Segmented by Academic, Admin, IoT, Guest.</p>
+      <div class="diagram">
+        <pre>
+CORE ROUTER (Layer 3)
+        |
+DISTRIBUTION SWITCH (L3/L2)
+        ├── AS-ACAD (Classrooms/Labs)
+        ├── AS-ADM  (Admin)
+        ├── AS-IOT  (IoT)
+        └── AS-GUEST (Guest) + AP-1 (Wi-Fi)
+        </pre>
+      </div>
+    </section>
+    <section>
+      <h2>Topology Comparison (Module 2)</h2>
+      <table>
+        <thead><tr><th>Topology</th><th>Pros</th><th>Cons</th><th>Use</th></tr></thead>
+        <tbody>
+          <tr><td>Star</td><td>Simple, fault isolation, centralized</td><td>Hub/Switch SPOF, limited by center</td><td>Access layer</td></tr>
+          <tr><td>Tree</td><td>Hierarchical, scalable</td><td>Root SPOF, backbone critical</td><td>Distribution/Core</td></tr>
+          <tr><td>Hybrid (Selected)</td><td>Flexible, combines strengths</td><td>Slightly complex</td><td>Overall campus</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section>
+      <h2>Hardware Selection</h2>
+      <table>
+        <thead><tr><th>Component</th><th>Type</th><th>Purpose</th><th>Layer</th></tr></thead>
+        <tbody>
+          <tr><td>Core Router</td><td>Layer 3 Router</td><td>Interconnect + edge</td><td>Layer 3 (Network)</td></tr>
+          <tr><td>Distribution Switch</td><td>L3/L2 Switch</td><td>Aggregation</td><td>L2/L3</td></tr>
+          <tr><td>Access Switches</td><td>Layer 2 Switch</td><td>Connect end devices</td><td>Layer 2</td></tr>
+          <tr><td>Access Point (AP)</td><td>Wireless AP</td><td>Wi-Fi coverage (Wireless TX)</td><td>Physical+Data Link</td></tr>
+          <tr><td>Gateway</td><td>Gateway device</td><td>Protocol conversion/edge</td><td>All (concept)</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section>
+      <h2>OSI/TCP-IP Mapping (Module 3)</h2>
+      <table>
+        <thead><tr><th>Function</th><th>OSI</th><th>TCP/IP</th><th>Key Concepts (syllabus)</th></tr></thead>
+        <tbody id="mappingBody"></tbody>
+      </table>
+    </section>
+  </main>
+  <footer><p>Minimum viable design</p></footer>
+  <script>
+    fetch('/api/simulation').then(r=>r.json()).then(d=>{
+      const m=d.simulation.mapping_osi_tcpip;
+      const tb=document.getElementById('mappingBody');
+      m.forEach(x=>{
+        tb.innerHTML+='<tr><td>'+x.function+'</td><td>'+x.osi+'</td><td>'+x.tcpip+'</td><td>'+x.protocols_concepts+'</td></tr>';
+      });
+    });
+  </script>
+</body>
+</html>

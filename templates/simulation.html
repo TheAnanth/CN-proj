@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simulation & Config - Smart Campus</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <header>
+    <h1>Simulation / Configuration (Module 5)</h1>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/architecture">Architecture</a>
+      <a href="/calculations">Bandwidth Calculations</a>
+      <a href="/simulation">Simulation/Config</a>
+      <a href="/report">Final Report</a>
+    </nav>
+  </header>
+  <main>
+    <section>
+      <h2>Simulated Architecture</h2>
+      <pre id="sim"></pre>
+    </section>
+    <section>
+      <h2>Bottlenecks & Single Points of Failure</h2>
+      <div class="grid">
+        <div>
+          <h3>Bottlenecks</h3>
+          <ul id="bottlenecks"></ul>
+        </div>
+        <div>
+          <h3>Single Points of Failure (SPOF)</h3>
+          <ul id="spof"></ul>
+        </div>
+      </div>
+    </section>
+    <section>
+      <h2>Configuration Notes</h2>
+      <ul id="cfg"></ul>
+    </section>
+  </main>
+  <footer><p>Design validation</p></footer>
+  <script>
+    fetch('/api/simulation').then(r=>r.json()).then(d=>{
+      const s=d.simulation;
+      document.getElementById('sim').textContent=JSON.stringify(s, null, 2);
+      s.bottlenecks_spof.bottlenecks.forEach(x=>{const li=document.createElement('li');li.textContent=x;document.getElementById('bottlenecks').appendChild(li);});
+      s.bottlenecks_spof.single_points_of_failure.forEach(x=>{const li=document.createElement('li');li.textContent=x;document.getElementById('spof').appendChild(li);});
+      s.configuration_notes.forEach(x=>{const li=document.createElement('li');li.textContent=x;document.getElementById('cfg').appendChild(li);});
+    });
+  </script>
+</body>
+</html>

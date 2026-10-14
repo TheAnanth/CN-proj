@@ -1,0 +1,64 @@
+========================================
+SMART CAMPUS NETWORK - HOW TO RUN
+========================================
+
+MAIN APP FILE: app.py  (Flask website + APIs)
+
+----------------------------------------
+STEP-BY-STEP (Flask app - RECOMMENDED)
+----------------------------------------
+1. Open PowerShell / Terminal.
+
+2. Go to the project folder:
+      cd "C:\Users\Ananth\Desktop\CN_record\CN_proj"
+
+3. (Optional) Create a virtual environment:
+      python -m venv venv
+      .\venv\Scripts\Activate.ps1
+
+4. Install the required packages:
+      pip install -r requirements.txt
+
+5. Run the app:
+      python app.py
+
+6. Open your browser and go to:
+      http://127.0.0.1:5000
+
+7. Stop the server: press CTRL + C in the terminal.
+
+
+----------------------------------------
+PAGES / ROUTES
+----------------------------------------
+   http://127.0.0.1:5000/              -> Home
+   http://127.0.0.1:5000/architecture  -> Architecture
+   http://127.0.0.1:5000/calculations  -> Bandwidth calculations
+   http://127.0.0.1:5000/simulation    -> Simulation
+   http://127.0.0.1:5000/report        -> Report
+
+   API endpoints:
+   POST http://127.0.0.1:5000/api/calculate
+   GET  http://127.0.0.1:5000/api/simulation
+
+
+----------------------------------------
+OPTIONAL - React frontend (frontend/)
+----------------------------------------
+1. cd "C:\Users\Ananth\Desktop\CN_record\CN_proj\frontend"
+2. npm install
+3. npm run dev
+4. Open http://localhost:5173
+
+
+----------------------------------------
+TROUBLESHOOTING
+----------------------------------------
+- If "flask not found" / import error:  pip install -r requirements.txt
+- If port 5000 is busy: close the other app using it,
+  or edit the last line of app.py (port=5000 -> another port).
+- If PowerShell blocks venv activation, run:
+      Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+  then activate again.
+
+========================================
